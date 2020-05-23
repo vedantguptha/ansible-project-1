@@ -1,0 +1,9 @@
+---
+- hosts: webservers
+  become: yes   # sudo -i
+  tasks:
+    - shell: /usr/bin/whoami
+      register: username
+    - debug: 
+       var:  username.stdout
+

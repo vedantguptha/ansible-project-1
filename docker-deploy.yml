@@ -1,0 +1,15 @@
+---
+- name: Playbook to deploy war file to docker node
+  hosts: docker-master
+  become: true
+  tasks:
+    - name: stop previous version docker
+      shell: docker stack 
+    - name: remove stopped container
+      shell: docker rm -f gyan_demo	  
+    - name: remove docker images
+      shell: docker image rm -f mailrahulsre/gyan_demo
+       
+    - name: create docker image
+      shell: docker run -d --name gyan_demo -p 8090:8080 mailrahulsre/gyan_demo
+
