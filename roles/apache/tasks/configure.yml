@@ -6,7 +6,7 @@
     group: root
     mode: u=rw,g=r,o=r
   notify:
-  - restart_apache
+  - reload_apache
 
 - name: "Copy index.html file"
   copy: src=files/index.html dest=/var/www/html/index.html
