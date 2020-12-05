@@ -1,0 +1,12 @@
+- name: Copy conf file with owner and permission
+  copy:
+    src: files/httpd.conf-original
+    dest: /etc/httpd/conf/httpd.conf
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+  notify:
+  - reload_apache
+
+- name: "Copy index.html file"
+  copy: src=files/index.html dest=/var/www/html/index.html

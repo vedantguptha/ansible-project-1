@@ -1,0 +1,55 @@
+---
+- name: play 1- Configure Apache and Tomcat for webserver
+  hosts: xyz-com-node
+  become: yes
+  roles:
+    - apache
+    - tomcat7
+
+- name: Code copy
+  hosts: xyz-com-node
+  become: yes
+  tasks:
+    - name: copy the xyz.com code
+      copy:
+        src: /etc/ansible/xyz-com/xyz.html
+        dest: /var/www/html/xyz.html
+        owner: root
+
+- name: play 2- Copy the code-war file to tomcat Servers
+  hosts: xyz-com-node
+  become: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python
+  tasks:
+    - name: Install boto3 and botocore with pip2 module
+      pip:
+        name:
+          - boto3
+          - botocore
+        executable: pip-2.7
+
+    - name: copy the war file
+      aws_s3:
+        bucket: artifactory-8am
+        object: trainingwale.war
+        dest: /usr/share/tomcat7/webapps/trainingwale.war
+        mode: get
+
+- name: "play 3 - Configure ProxyPass between Apache and Tomcat"
+  hosts: xyz-com-node
+  become: yes
+  tasks:
+    - name: copy the proxypass conf file
+      copy:
+        src: /etc/ansible/xyz-com/proxyPass.conf
+        dest: /etc/httpd/conf.d/proxyPass.conf
+        owner: root
+      notify:
+        - reload apache
+
+  handlers:
+    - name: reload apache
+      service:
+        name: httpd
+        state: reloaded

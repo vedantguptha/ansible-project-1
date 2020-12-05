@@ -1,0 +1,7 @@
+---
+- name: Configure nodes with misl softwares
+  hosts: webservers
+  become: yes
+  roles:
+    - misl
+    - apache

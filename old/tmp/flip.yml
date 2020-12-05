@@ -1,0 +1,42 @@
+---
+- name: Install Apache
+  hosts: webserver
+  become: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python
+  roles:
+   - apache
+
+- name: Install tomcat
+  hosts: tomcatservers
+  become: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python  
+  roles:
+   - tomcat7
+
+- name: Install Python packages
+  hosts: tomcatservers
+  become: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python
+  tasks:
+    - name: Install boto3 and botocore with pip3 module
+      pip:
+       name:
+        - boto3
+        - botocore
+       executable: pip-2.7
+
+- name: PlayBook to Deploy war file to Tomcat Servers
+  hosts: tomcatservers
+  become: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python
+  tasks:
+    - name: copying war file from s3 to ansible server
+      aws_s3:
+        object: SampleWebApp123.war
+        bucket: artifactory-8am
+        dest: /usr/share/tomcat7/webapps/SampleWebApp123.war
+        mode: get

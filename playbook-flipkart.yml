@@ -1,0 +1,28 @@
+---
+- name: "Play 1 – webserver install and configure"
+  hosts: webservers
+  become: yes
+  tasks:  			####   LIST
+    - name: "Install Apache"
+      yum:
+        state: present 
+        name: httpd
+         
+    - name: "Configure Apache"
+      copy:
+        src: /etc/ansible/index.html
+        dest: /var/www/html/index.html
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: "Configure Apache"
+      copy:
+        src: /etc/ansible/httpd.conf
+        dest: /etc/httpd/conf/httpd.conf
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: "Apache start"
+      service: name=httpd state=restarted

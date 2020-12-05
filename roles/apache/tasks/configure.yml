@@ -1,12 +1,13 @@
-- name: Copy conf file with owner and permission
+- name: "Copy lb-health-check.html file"
+  copy: src=files/lb-health-check.html dest=/var/www/html/lb-health-check.html
+
+- name: "Copy httpd Configuration file"
   copy:
-    src: files/httpd.conf-original
+    src: files/httpd.original
     dest: /etc/httpd/conf/httpd.conf
     owner: root
     group: root
-    mode: u=rw,g=r,o=r
+    mode: '0644'
   notify:
-  - reload_apache
+  - restart apache
 
-- name: "Copy index.html file"
-  copy: src=files/index.html dest=/var/www/html/index.html

@@ -1,5 +1,4 @@
-- name: install Apache 
-  package:
-    name: httpd
+- name: "Install Apache"
+  yum: 
+    name: "{{ packages }}"
     state: present
-

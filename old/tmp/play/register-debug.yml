@@ -1,0 +1,12 @@
+---
+- name: Play1
+  hosts: localhost
+  tasks:
+    - name: test
+      shell: /usr/bin/whoami
+      register: username
+
+    - name: Debug prints examples
+#First Example priting seeded Parameters
+      debug:
+        msg: System {{ inventory_hostname }} has uuid {{ ansible_product_uuid }}

@@ -1,0 +1,38 @@
+---
+- name : Play 1
+  hosts: webservers
+  tasks:
+    - name: "Install Apache"
+      yum: name=httpd state=present
+    - name: "Start Apache"
+      service: name=httpd state=restarted
+
+- name: Play 2
+  hosts: webservers
+  tasks:
+    - name: "Stop Apache"
+      service:
+        name: httpd
+        state: stopped
+    - name: "Remove Apache"
+      yum:
+        name: httpd
+        state: absent
+
+- name : Play 3 - Configure Apache Again
+  hosts: webservers
+  tasks:
+    - name: "Install Apache"
+      yum: name=httpd state=present
+    - name: "Start Apache"
+      service: name=httpd state=restarted
+
+- name : Play 4 - Configure Tomcat
+  hosts: tomcatservers
+  tasks:
+    - name: "Install Tomcat"
+      yum: name=tomcat7,tomcat7-webapps,tomcat7-admin-webapps state=present
+    - name: "Start Tomcat"
+      service: name=tomcat7 state=restarted
+
+

@@ -1,0 +1,14 @@
+---
+- name: PlayBook to Deploy war file to Tomcat Servers
+  hosts: tomcatservers
+  become: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+    - name: copying war file from s3 to ansible server
+      aws_s3:
+        object: SampleWebApp123.war
+        bucket: artifactory-09apr2020
+        dest: /usr/share/tomcat7/webapps/SampleWebApp123.war
+        mode: get
+

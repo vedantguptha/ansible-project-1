@@ -1,12 +1,51 @@
-#localhost
+# This is the default ansible 'hosts' file.
+#
+# It should live in /etc/ansible/hosts
+#
+#   - Comments begin with the '#' character
+#   - Blank lines are ignored
+#   - Groups of hosts are delimited by [header] elements
+#   - You can enter hostnames or ip addresses
+#   - A hostname/ip can be a member of multiple groups
 
-[docker-nodes]
-#ip-172-31-45-179
-#172.31.36.36
+# Ex 1: Ungrouped hosts, specify before any group headers.
+
+## green.example.com
+## blue.example.com
+## 192.168.100.1
+## 192.168.100.10
+localhost
+# Ex 2: A collection of hosts belonging to the 'webservers' group
+
+[webserver]
+#172.31.7.11
+#172.31.12.178
+172.31.15.0
+172.31.15.23
+
+[tomcat-server]
+#ip-172-31-7-11
+#172.31.12.178
+172.31.15.0
+172.31.15.23
 
 
-[docker-master]
-#ip-172-31-45-179
+# If you have multiple hosts following a pattern you can specify
+# them like this:
 
-[xyz-com-node]
-ip-172-31-33-189
+## www[001:006].example.com
+
+# Ex 3: A collection of database servers in the 'dbservers' group
+
+## [dbservers]
+## 
+## db01.intranet.mydomain.net
+## db02.intranet.mydomain.net
+## 10.25.1.56
+## 10.25.1.57
+
+# Here's another example of host ranges, this time there are no
+# leading 0s:
+
+## db-[99:101]-node.example.com
+

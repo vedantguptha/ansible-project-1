@@ -1,0 +1,12 @@
+#localhost
+
+[docker-nodes]
+#ip-172-31-45-179
+#172.31.36.36
+
+
+[docker-master]
+#ip-172-31-45-179
+
+[xyz-com-node]
+ip-172-31-33-189
